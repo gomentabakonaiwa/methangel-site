@@ -59,3 +59,61 @@ footer{
   color:var(--muted);
   user-select:none;
 }
+
+.gothic {
+  font-family: 'UnifrakturCook', serif;
+  letter-spacing: 0.05em;
+  text-transform: none;
+  font-weight: 700;
+}
+
+/* === LOGO / HEADER === */
+.site-header {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.site-header .logo img {
+  width: 220px; /* tweak this for size */
+  height: auto;
+  opacity: 0.95;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.site-header .logo img:hover {
+  transform: scale(1.08);
+  opacity: 1;
+}
+
+/* === GLOBAL COLORS === */
+body {
+  background-color: #ffffff;
+  color: #000000;
+  font-family: 'UnifrakturCook', serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  margin-top: 60px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+}
+
+.message {
+  font-family: "Times New Roman", serif;
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto 20px;
+  line-height: 1.6;
+}
+
+.hint {
+  font-size: 1rem;
+  font-weight: bold;
+}
