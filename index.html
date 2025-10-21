@@ -4,25 +4,104 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Methangel — Coming Soon</title>
-  <meta name="description" content="Methangel — a methereal realm in progress." />
+  <meta name="description" content="Methangel — GOD is creating this a methereal realm." />
   <link rel="stylesheet" href="style.css" />
-</head><link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+</head>
 <body>
+  <!-- Header -->
   <header class="site-header">
     <a href="/" class="logo" aria-label="Methangel home">
-      <img src="assets/img/maLogo.png" alt="Methangel logo" />
+      <img src="assets/img/mycutelilangel_logo.png" alt="Methangel logo">
     </a>
+    <nav class="header-icons" aria-label="Utility">
+      <button class="icon" title="About / Business">⌘</button>
+      <button class="icon" title="Help / Contact">?</button>
+      <button class="icon" title="Language">🌐</button>
+      <button class="icon basket" title="Basket">🧺 <span id="basket-count">0</span></button>
+    </nav>
   </header>
 
-  <main>
-     <h1 class="gothic">Coming Soon</h1>
-  <p class="message">
-    hello fellow methbody, welcome to this methereal realm, it will be soon
-    filled with numinous things
-      </p>
-  <p class="hint gothic">HOLY HOLY HOLY</p>
-</main>
-  <footer>© methangel — v0</footer>
+  <!-- Optional ornament under logo -->
+  <div class="ornament">
+    <img src="assets/img/ornament_top.png" alt="">
+  </div>
 
+  <!-- Side “church windows” (images now; videos later) -->
+  <aside class="side side--left">
+    <div class="side-window">
+      <!-- later: <video src="..." autoplay loop muted playsinline></video> -->
+      <img src="assets/img/side_window_left.png" alt="">
+    </div>
+  </aside>
+  <aside class="side side--right">
+    <div class="side-window">
+      <img src="assets/img/side_window_right.png" alt="">
+    </div>
+  </aside>
+
+  <!-- Player (single sprite + invisible hit areas + glow) -->
+  <div class="player" aria-label="Music player">
+    <img class="player__sprite" src="assets/img/mp_orb_sprite.png" alt="" draggable="false">
+    <button class="player__hit player__hit--prev"   aria-label="Previous"></button>
+    <button class="player__hit player__hit--toggle" aria-label="Play / Pause"></button>
+    <button class="player__hit player__hit--next"   aria-label="Next"></button>
+    <span class="orb-glow orb-glow--prev"   aria-hidden="true"></span>
+    <span class="orb-glow orb-glow--toggle" aria-hidden="true"></span>
+    <span class="orb-glow orb-glow--next"   aria-hidden="true"></span>
+  </div>
+
+  <!-- Countdown placeholder (optional, easy to wire later) -->
+  <div id="countdown" class="countdown gothic">31:23:59</div>
+
+  <!-- Central content -->
+  <main class="gallery-wrap">
+    <!-- Top SHOWROOM tab (bigger) -->
+    <section class="tab tab--showroom" data-id="showroom">
+      <img class="frame" src="assets/img/product_tab(1).png" alt="">
+      <div class="tab__content">
+        <span class="tab__label gothic">SHOWROOM</span>
+      </div>
+      <button class="tab__orb" aria-label="Showroom details"></button>
+    </section>
+
+    <!-- Product grid container (2 columns x 4 rows visible) -->
+    <section class="tab-grid" id="tabGrid"></section>
+  </main>
+
+  <!-- Pager (arrows + dots) -->
+  <div class="pager">
+    <button class="pager__arrow" id="arrowLeft"  aria-label="Previous columns">‹</button>
+    <div class="pager__dots" id="pagerDots"></div>
+    <button class="pager__arrow" id="arrowRight" aria-label="Next columns">›</button>
+  </div>
+
+  <!-- Modal for expanded views + details card -->
+  <div id="modal" class="modal" aria-hidden="true">
+    <div class="modal__backdrop"></div>
+    <div class="modal__panel" role="dialog" aria-modal="true">
+      <button class="modal__close" aria-label="Close">×</button>
+      <div class="modal__content">
+        <div class="modal__viewport">EXPANDED VIEW</div>
+
+        <!-- Details bubble (opened by the small orb) -->
+        <div class="details-card" hidden>
+          <h3 class="gothic">Object Name</h3>
+          <p>Description / materials / edition.</p>
+          <div class="detail-opts">
+            <label>Size <select><option>—</option><option>S</option><option>M</option><option>L</option></select></label>
+            <label>Qty <input type="number" min="1" value="1"></label>
+          </div>
+          <div class="detail-actions">
+            <button class="btn buy">Buy</button>
+            <button class="btn add">Add to basket</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <audio id="playerAudio" preload="auto"></audio>
   <script src="main.js" defer></script>
 </body>
+</html>
