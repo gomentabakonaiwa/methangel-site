@@ -16,7 +16,7 @@ html, body {
 }
 
 .site-logo {
-  height: clamp(70px, 10vw, 110px);   /* size control */
+  height: clamp(80px, 6vw, 140px);   /* size control */
   width: auto;
   filter: drop-shadow(0 0 2px rgba(0,0,0,0.1));
   user-select: none;
