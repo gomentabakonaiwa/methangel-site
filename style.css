@@ -26,12 +26,14 @@ html, body {
 }
 
 .showroom {
+  position: fixed;
+  top: 22vh; /* controls how far below the logo it sits */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 12vh; /* distance below logo */
-  position: relative;
-  z-index: 5;
 }
 
 .showroom-frame {
