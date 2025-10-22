@@ -8,17 +8,19 @@ html, body {
 /* ========== LOGO ========== */
 .logo-wrap {
   position: fixed;
-  top: 40px;                 /* adjust vertical placement */
+  top: 3.5vh;                /* distance from top */
   left: 50%;
   transform: translateX(-50%);
   z-index: 100;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .site-logo {
-  height: clamp(80px, 6vw, 140px);   /* size control */
-  width: auto;
-  filter: drop-shadow(0 0 2px rgba(0,0,0,0.1));
-  user-select: none;
+  width: clamp(120px, 13vw, 180px);  /* proportional, smaller and fixed */
+  height: auto;
+  image-rendering: crisp-edges;
   pointer-events: none;
+  user-select: none;
 }
