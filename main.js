@@ -1,4 +1,5 @@
 /* ---------- DATA ---------- */
+const FRAME_SRC = 'assets/img/product_tab(1).png'; // <- match the exact filename/case
 const PRODUCTS = Array.from({ length: 20 }).map((_, i) => ({
   id: `prod-${i+1}`,
   title: `Object #${i+1}`,
@@ -32,9 +33,9 @@ function renderGrid(){
       el.className = 'product-tab';
       el.dataset.id = item.id;
       el.innerHTML = `
-        <img class="frame" src="assets/img/product_tab(1).png" alt="">
-        <div class="tab__content" title="${item.title}"></div>
-        <button class="tab__orb" aria-label="Details"></button>
+  <img class="frame" src="${FRAME_SRC}" alt="">
+  <div class="tab__content" title="${item.title}"></div>
+  <button class="tab__orb" aria-label="Details"></button>
       `;
 
       // click tile -> expand

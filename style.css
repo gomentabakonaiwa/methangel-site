@@ -1,12 +1,12 @@
 :root{
-  /* central column width that matches your mock */
+  /* central column width */
   --contentW: 760px;        /* tweak 720–820 until it feels perfect */
   --gap: 14px;
 
   /* element sizes */
-  --logoH: 120px;           /* bigger logo */
-  --showroomH: 140px;       /* shorter showroom strip */
-  --tile: 160px;            /* square product tile size (160–180 sweet spot) */
+  --logoH: 140px;           /* bigger logo */
+  --showroomH: 100px;       /* shorter showroom strip */
+  --tile: 150px;            /* square product tile size (160–180 sweet spot) */
 
   /* side windows */
   --sideW: 160px;           /* width of church windows */
