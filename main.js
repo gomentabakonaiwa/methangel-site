@@ -1,21 +1,42 @@
 /* ---------- DATA ---------- */
-const FRAME_SRC = 'assets/img/product_tab(1).png'; // <- match the exact filename/case
-const PRODUCTS = Array.from({ length: 20 }).map((_, i) => ({
-  id: `prod-${i+1}`,
-  title: `Object #${i+1}`,
-  images: [`placeholder-${i+1}-1`, `placeholder-${i+1}-2`], // swap to real images later
-}));
+/* ======= CONFIG ======= */
+const FRAME_SRC = 'assets/img/product_tab(1).png';  // << use your exact frame filename
+const SHOWROOM_ID = 'showroom';
 
-/* ---------- GRID / PAGER (2 cols visible; unlimited columns) ---------- */
+/* Example products — each one is INDEPENDENT */
+const PRODUCTS = [
+  {
+    id: 'p-angelic-veil',
+    title: 'Angelic Veil Tee',
+    price: '£48',
+    images: ['assets/img/example1a.jpg','assets/img/example1b.jpg'],
+    sizes: ['S','M','L','XL']
+  },
+  {
+    id: 'p-glass-relic',
+    title: 'Glass Relic',
+    price: '£120',
+    images: ['assets/img/example2a.jpg','assets/img/example2b.jpg']
+  },
+  {
+    id: 'p-altar-cap',
+    title: 'Altar Cap',
+    price: '£32',
+    images: ['assets/img/example3a.jpg']
+  },
+  // add more real items…
+];
+
+/* ======= GRID / PAGER ======= */
 const grid = document.getElementById('tabGrid');
 const dotsWrap = document.getElementById('pagerDots');
 const leftBtn = document.getElementById('arrowLeft');
 const rightBtn = document.getElementById('arrowRight');
 
-const ROWS_VISIBLE = 4; // two columns x four rows = 8 visible
+const ROWS_VISIBLE = 4;   // 2 columns x 4 rows = 8 visible
 const COLS_VISIBLE = 2;
 const COL_SIZE = ROWS_VISIBLE;
-const TOTAL_COLS = Math.ceil(PRODUCTS.length / ROWS_VISIBLE);
+const TOTAL_COLS = Math.max(1, Math.ceil(PRODUCTS.length / ROWS_VISIBLE));
 let colIndex = 0;
 
 function renderGrid(){
@@ -33,28 +54,36 @@ function renderGrid(){
       el.className = 'product-tab';
       el.dataset.id = item.id;
       el.innerHTML = `
-  <img class="frame" src="${FRAME_SRC}" alt="">
-  <div class="tab__content" title="${item.title}"></div>
-  <button class="tab__orb" aria-label="Details"></button>
+        <img class="frame" src="${FRAME_SRC}" alt="">
+        <div class="tab__content" title="${item.title}">
+          <!-- inner preview area (leave black for now or drop a thumb) -->
+        </div>
+        <button class="tab__orb" aria-label="Details"></button>
       `;
 
-      // click tile -> expand
+      // each tile has its OWN handlers
       el.querySelector('.tab__content').addEventListener('click', () => openProduct(item));
-      // small orb -> details card
-      el.querySelector('.tab__orb').addEventListener('click', (e) => { e.stopPropagation(); openProduct(item, {showDetails:true}); });
+      el.querySelector('.tab__orb').addEventListener('click', (e) => {
+        e.stopPropagation();
+        openProduct(item, { showDetails:true });
+      });
+
       grid.appendChild(el);
     }
   }
   renderDots();
 }
+
 function renderDots(){
   dotsWrap.innerHTML = '';
   for (let i = 0; i < TOTAL_COLS; i++){
     const d = document.createElement('div');
-    d.className = 'dot' + (i >= colIndex && i < colIndex + COLS_VISIBLE ? ' active':'');
+    const active = (i >= colIndex && i < colIndex + COLS_VISIBLE);
+    d.className = 'dot' + (active ? ' active' : '');
     dotsWrap.appendChild(d);
   }
 }
+
 leftBtn.addEventListener('click', () => {
   if (colIndex > 0){ colIndex--; renderGrid(); }
 });
@@ -62,66 +91,78 @@ rightBtn.addEventListener('click', () => {
   if (colIndex < TOTAL_COLS - COLS_VISIBLE){ colIndex++; renderGrid(); }
 });
 
-/* ---------- SHOWROOM ---------- */
+/* ======= MODAL / SHOWROOM / PRODUCT ======= */
 const modal = document.getElementById('modal');
 const modalClose = modal.querySelector('.modal__close');
 const detailsCard = modal.querySelector('.details-card');
 const viewport = modal.querySelector('.modal__viewport');
+const basketCount = document.getElementById('basket-count');
+let basketNum = 0;
 
 function openModal(){ modal.setAttribute('aria-hidden','false'); }
 function closeModal(){ modal.setAttribute('aria-hidden','true'); detailsCard.hidden = true; }
 modalClose.addEventListener('click', closeModal);
 modal.querySelector('.modal__backdrop').addEventListener('click', closeModal);
 
+// showroom (full-bleed on click)
 document.querySelector('.tab--showroom .tab__content').addEventListener('click', () => {
   viewport.textContent = 'SHOWROOM — FULLSCREEN';
+  detailsCard.hidden = true;
   openModal();
 });
 document.querySelector('.tab--showroom .tab__orb').addEventListener('click', (e) => {
   e.stopPropagation();
   viewport.textContent = 'SHOWROOM — FULLSCREEN';
-  detailsCard.hidden = false;
+  detailsCard.hidden = false; // shows white spec card for showroom too (for now)
   openModal();
 });
 
-/* ---------- PRODUCT EXPAND + DETAILS ---------- */
+// open product: its OWN images, name, price, sizes/options
 function openProduct(item, opts = {}){
   let imgIndex = 0;
-  viewport.textContent = ''; // replace placeholder
-  // simple in-modal gallery frame
+  viewport.textContent = '';
   const wrap = document.createElement('div');
-  wrap.style.cssText = 'display:grid;place-items:center;gap:8px;width:100%;height:100%';
+  wrap.style.cssText = 'display:grid;gap:10px';
+
   const big = document.createElement('div');
-  big.style.cssText = 'width:100%;height:100%;display:grid;place-items:center;color:#fff;background:#000;';
-  big.textContent = `${item.title} — view ${imgIndex+1}/${item.images.length}`;
+  big.className = 'modal__big';
+  big.style.cssText = 'background:#000;color:#fff;display:grid;place-items:center;height:48vh';
+  big.textContent = item.images?.length ? `${item.title} — view 1/${item.images.length}` : item.title;
   wrap.appendChild(big);
-  // arrows inside modal
+
   const ctrls = document.createElement('div');
-  ctrls.style.cssText = 'display:flex;gap:12px;justify-content:center';
-  const prev = document.createElement('button'); prev.textContent = '‹'; prev.className='btn';
-  const next = document.createElement('button'); next.textContent = '›'; next.className='btn';
+  ctrls.style.cssText = 'display:flex;justify-content:center;gap:12px';
+  const prev = document.createElement('button'); prev.textContent = '‹'; prev.className = 'btn';
+  const next = document.createElement('button'); next.textContent = '›'; next.className = 'btn';
   ctrls.appendChild(prev); ctrls.appendChild(next);
-  wrap.appendChild(ctrlls);
+  wrap.appendChild(ctrls);
+
+  function updateBig(){
+    big.textContent = item.images?.length
+      ? `${item.title} — view ${imgIndex+1}/${item.images.length}`
+      : item.title;
+  }
+  prev.onclick = () => { if (!item.images?.length) return; imgIndex = (imgIndex - 1 + item.images.length) % item.images.length; updateBig(); };
+  next.onclick = () => { if (!item.images?.length) return; imgIndex = (imgIndex + 1) % item.images.length; updateBig(); };
+
   viewport.appendChild(wrap);
 
-  function update(){ big.textContent = `${item.title} — view ${imgIndex+1}/${item.images.length}`; }
-  prev.onclick = () => { imgIndex = (imgIndex - 1 + item.images.length) % item.images.length; update(); };
-  next.onclick = () => { imgIndex = (imgIndex + 1) % item.images.length; update(); };
-
-  detailsCard.hidden = !opts.showDetails;
-  openModal();
+  // fill details card with THIS item’s info
+  const card = detailsCard;
+  card.querySelector('h3').textContent = item.title;
+  card.querySelector('p').textContent  = item.price ? `Price: ${item.price}` : '—';
+  const sizeSel = card.querySelector('select');
+  sizeSel.innerHTML = '<option>—</option>' + (item.sizes || []).map(s => `<option>${s}</option>`).join('');
+  card.hidden = !opts.showDetails;
 
   // buy / add
-  modal.querySelector('.btn.buy').onclick = () => { /* checkout later */ detailsCard.hidden = true; closeModal(); };
-  modal.querySelector('.btn.add').onclick = () => { addToBasket(1); detailsCard.hidden = true; closeModal(); };
+  card.querySelector('.btn.buy').onclick = () => { /* later: checkout flow */ card.hidden = true; closeModal(); };
+  card.querySelector('.btn.add').onclick = () => { basketNum += 1; basketCount.textContent = String(basketNum); card.hidden = true; closeModal(); };
+
+  openModal();
 }
 
-/* ---------- BASKET COUNT ---------- */
-const basketCount = document.getElementById('basket-count');
-let basketNum = 0;
-function addToBasket(n=1){ basketNum += n; basketCount.textContent = String(basketNum); }
-
-/* ---------- MUSIC (single sprite + hit areas) ---------- */
+/* ======= PLAYER (unchanged) ======= */
 const tracks = ['assets/audio/track1.mp3','assets/audio/track2.mp3'].filter(Boolean);
 const audio = document.getElementById('playerAudio');
 let tIndex = 0;
@@ -145,5 +186,5 @@ document.querySelector('.player__hit--next').addEventListener('click', () => {
 });
 loadTrack();
 
-/* ---------- INIT ---------- */
+/* ======= INIT ======= */
 renderGrid();
