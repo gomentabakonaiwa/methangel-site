@@ -24,3 +24,20 @@ html, body {
   pointer-events: none;
   user-select: none;
 }
+
+.showroom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 12vh; /* distance below logo */
+  position: relative;
+  z-index: 5;
+}
+
+.showroom-frame {
+  width: clamp(220px, 24vw, 300px); /* same scale as product tabs */
+  height: auto;
+  image-rendering: crisp-edges;
+  pointer-events: none;
+  user-select: none;
+}
