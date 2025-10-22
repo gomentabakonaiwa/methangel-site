@@ -8,38 +8,36 @@ html, body {
 /* ========== LOGO ========== */
 .logo-wrap {
   position: fixed;
-  top: 3.5vh;                /* distance from top */
+  top: 5vh;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 100;
+  z-index: 10;
   display: flex;
   justify-content: center;
   align-items: center;
+  pointer-events: none;
 }
 
 .site-logo {
-  width: clamp(300px, 38vw, 480px);  /* ×3 larger than before */
+  width: clamp(300px, 38vw, 480px);
   height: auto;
   image-rendering: crisp-edges;
-  pointer-events: none;
   user-select: none;
 }
 
 .showroom {
   position: fixed;
-  top: 22vh; /* controls how far below the logo it sits */
+  top: 25vh; /* tweak this until the gap feels right visually */
   left: 50%;
   transform: translateX(-50%);
-  z-index: 50;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .showroom-frame {
-  width: clamp(220px, 24vw, 300px); /* same scale as product tabs */
+  width: clamp(220px, 24vw, 300px);
   height: auto;
   image-rendering: crisp-edges;
-  pointer-events: none;
   user-select: none;
 }
