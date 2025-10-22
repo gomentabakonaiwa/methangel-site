@@ -18,7 +18,7 @@ html, body {
 }
 
 .site-logo {
-  width: clamp(120px, 13vw, 180px);  /* proportional, smaller and fixed */
+  width: clamp(300px, 38vw, 480px);  /* ×3 larger than before */
   height: auto;
   image-rendering: crisp-edges;
   pointer-events: none;
