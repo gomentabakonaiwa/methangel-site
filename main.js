@@ -32,7 +32,7 @@ function renderGrid(){
       el.className = 'product-tab';
       el.dataset.id = item.id;
       el.innerHTML = `
-        <img class="frame" src="assets/img/frame_tab.png" alt="">
+        <img class="frame" src="assets/img/product_tab(1).png" alt="">
         <div class="tab__content" title="${item.title}"></div>
         <button class="tab__orb" aria-label="Details"></button>
       `;
