@@ -1,81 +1,46 @@
-/* ========== BASE RESET ========== */
-html, body {
-  margin: 0;
-  padding: 0;
-  background: #fff;
-}
-
-/* ========== LOGO ========== */
-.logo-wrap {
-  position: fixed;
-  top: 5vh;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  pointer-events: none;
-}
-
-.site-logo {
-  width: clamp(300px, 38vw, 480px);
-  height: auto;
-  image-rendering: crisp-edges;
-  user-select: none;
-}
-
-.showroom {
-  position: fixed;
-  top: 25vh; /* tweak this until the gap feels right visually */
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.showroom-frame {
-  width: clamp(220px, 24vw, 300px);
-  height: auto;
-  image-rendering: crisp-edges;
-  user-select: none;
-}
 :root{
-  --topPad: 5vh;     /* was 6vh — lifts logo slightly higher */
-  --heroGap: 10px;   /* was 14px — pulls showroom closer */
-  --tile: 280px;     /* was 260px — makes showroom just a bit larger */
+  --topPad: 3vh;   /* was 5–6vh; lifts the whole stack toward the top */
+  --heroGap: 8px;  /* smaller gap so showroom sits closer to logo */
+  --tile: 280px;   /* showroom size (same as future product tabs) */
 }
 
+/* global sanity */
+* { box-sizing: border-box; }
 html, body{
   height: 100%;
   margin: 0;
   background: #fff;
-  overflow: hidden;
+  overflow: hidden;        /* no scroll */
 }
 
+/* Pin hero to the viewport and lock 2 rows: logo + showroom */
 .stage{
   position: fixed;
   inset: 0;
   display: grid;
+  grid-template-rows: auto auto 1fr; /* logo, showroom, flexible spacer */
   justify-items: center;
   align-content: start;
-  row-gap: var(--heroGap);
   padding-top: var(--topPad);
 }
 
+/* explicit rows to avoid accidental shifts */
 .site-logo{
+  grid-row: 1;
   width: clamp(300px, 38vw, 480px);
   height: auto;
   image-rendering: crisp-edges;
   user-select: none;
   pointer-events: none;
+  margin: 0;               /* kill any default spacing */
 }
 
 .showroom-frame{
-  width: var(--tile);
+  grid-row: 2;
+  width: clamp(220px, 24vw, var(--tile));
   height: auto;
   image-rendering: crisp-edges;
   user-select: none;
   pointer-events: none;
+  margin: 0;
 }
