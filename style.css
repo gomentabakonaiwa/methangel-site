@@ -41,3 +41,45 @@ html, body {
   image-rendering: crisp-edges;
   user-select: none;
 }
+:root{
+  --topPad: 6vh;    /* distance from top to logo; tweak 4–10vh */
+  --heroGap: 14px;  /* gap between logo and showroom tab */
+  --tile: 260px;    /* showroom & (later) product tab size: 220–300px sweet spot */
+}
+
+/* no scroll, white canvas */
+html, body{
+  height: 100%;
+  margin: 0;
+  background: #fff;
+  overflow: hidden;          /* page isn’t scrollable */
+}
+
+/* STAGE: pinned to viewport, stacked vertically */
+.stage{
+  position: fixed;           /* locks the whole stack to the screen */
+  inset: 0;
+  display: grid;
+  justify-items: center;
+  align-content: start;      /* stack from the top */
+  row-gap: var(--heroGap);
+  padding-top: var(--topPad);
+}
+
+/* LOGO */
+.site-logo{
+  width: clamp(300px, 38vw, 480px);  /* adjust if you want bigger/smaller */
+  height: auto;
+  image-rendering: crisp-edges;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* SHOWROOM (same size as product tabs) */
+.showroom-frame{
+  width: var(--tile);
+  height: auto;
+  image-rendering: crisp-edges;
+  user-select: none;
+  pointer-events: none;      /* we’ll attach click to a wrapper later */
+}
